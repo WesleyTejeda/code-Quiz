@@ -1,0 +1,70 @@
+.row1{
+    text-align: center;
+}
+
+.col-Base{
+    width: 32%;
+    float: left;
+}
+.sharedCol{
+    float: left;
+    width: 50%;
+}
+.container-Header{
+    margin: auto;
+    display: block;
+    width: 100%;
+}
+.container-Body{
+    min-height: max-content;
+    width: 900px;
+    margin: auto;
+    display: block;
+    padding: 50px;
+   
+}
+.center{
+    text-align: center;
+}
+.dark{
+    background-color: black;
+    color: white;
+}
+
+.light{
+    background-color: honeydew;
+    color: black;
+}
+.border{
+    border: cyan;
+    border-radius: 15px;
+    border-style: groove;
+}
+.border2{
+    border:cyan;
+    border-radius: 15px;
+    border-style: groove;
+}
+header nav{
+    position: fixed;
+    left: 0;
+    width: 100%;
+    top: 0;
+}
+body{
+    background-color: grey;
+}
+span{
+    font-size: 30px;
+    margin: auto;
+}
+
+p {
+    text-indent: 0.5in;
+}
+footer{
+    position: fixed;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+}
