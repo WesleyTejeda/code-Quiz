@@ -1,5 +1,5 @@
-.row1{
-    text-align: center;
+.row{
+    display: block;
 }
 
 .col-Base{
@@ -26,6 +26,10 @@
 .center{
     text-align: center;
 }
+.center-Button{
+    text-align: center;
+    width: 20%;
+}
 .dark{
     background-color: black;
     color: white;
@@ -45,6 +49,23 @@
     border-radius: 15px;
     border-style: groove;
 }
+
+.invis{
+    visibility: hidden;
+}
+.display{
+    display: block;
+}
+
+.float-Right{
+    float: right;
+}
+.float-Left{
+    float: left;
+}
+.textCenter{
+    text-align: center;
+}
 header nav{
     position: fixed;
     left: 0;
@@ -61,6 +82,10 @@ span{
 
 p {
     text-indent: 0.5in;
+    font-size: larger;
+}
+form input{
+    margin-bottom: 10px;
 }
 footer{
     position: fixed;

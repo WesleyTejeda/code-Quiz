@@ -9,7 +9,7 @@
 <body>
     <header class="container-Header">
         <nav>
-            <div class="row1">
+            <div class="row textCenter">
                 <div class="col-Base dark border">
                     <a href="#"><h2>Highscores</h2></a>
                 </div>
@@ -29,14 +29,14 @@
     </header>
     <main>
         <div class="container-Body light">
-            <div class="row2">
+            <div class="row">
                 <div class="col center">
-                    <h2>Are you ready to take the quiz?</h2>
+                    <h2 id="questionNum">Are you ready to take the quiz?</h2>
                 </div>
             </div>
-            <div class="row3">
+            <div class="row">
                 <div class="col">
-                    <p>This quiz consists of 10 questions all 
+                    <p id="questionField">This quiz consists of 10 questions all 
                     pertaining to javascript coding. Do you think
                     you have what it takes to be top dog? Take a look 
                     at the top right corner of the screen. I've rigged 
@@ -47,15 +47,31 @@
                     append your result on my wall of fame. Good luck</p>
                 </div>
             </div>
-            <div class="row4">
-                <div class="col">
-                    <button id="button">Start</button>
+            <div class="row">
+                <form class="invis" id="choices">
+                    <input type="radio" id="choice1" name="question" value="choice-A">
+                    <label for="choice-A">Test</label><br>
+                    <input type="radio" id="choice2" name="question" value="choice-B">
+                    <label for="choice-B">Test</label><br>
+                    <input type="radio" id="choice3" name="question" value="choice-C">
+                    <label for="choice-C">Test</label><br>
+                    <input type="radio" id="choice4" name="question" value="choice-D">
+                    <label for="choice-D">Test</label><br>
+                    <div class="textCenter">
+                        <input class="center-Button type="submit" id="subButton" value="Submit">
+                        <button class="center-Button" id="nextButton">Next Question</button>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="textCenter">
+                    <button id="startButton">Start</button>
                 </div>
             </div>
         </div>
     </main>
     <footer>
-        <div class="row1">
+        <div class="row textCenter">
             <div class="col-Base dark border2">
                 <a href="https://github.com/wesleytejeda" target="_blank"><h2>My Github</h2></a>
             </div>
