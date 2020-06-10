@@ -53,13 +53,16 @@ submitButton.addEventListener("click", function(){
     //On clicking submit we store the choice of user
     userChoice = checkRadio();
     document.querySelector("#chosen").textContent = userChoice;
-    if(userChoice == answers[currentIndex-1])
-    numRight++;
 });
 
 //When user clicks nextButton the next question data will populate
 nextButton.addEventListener("click",function (){
     event.preventDefault();
+    //Checks if previous answer was answered correctly
+    if(userChoice == answers[currentIndex-1])
+        numRight++;
+    else
+        time -= 10;
     uncheckRadio();
     //Refeshes answer chosen
     document.querySelector("#chosen").textContent = "";
@@ -98,3 +101,6 @@ function uncheckRadio(){
     if(choice4.checked)
         choice4.checked = false;
 }
+
+//To do:
+//- Only allow 10 answers (for now user can click all 4 options and get the answer right, as well as output can be >100%)
