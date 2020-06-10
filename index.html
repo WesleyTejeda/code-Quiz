@@ -17,11 +17,13 @@
                     <h2>Code Quiz</h2>
                 </div>
                 <div class="col-Base dark border">
-                    <div class="sharedCol">
-                        <h2>Time Left: </h2>
-                    </div>
-                    <div class="sharedCol">
-                        <span class="dark" id="insertTime">120 sec</span>
+                    <div class="row">
+                        <div class="sharedCol">
+                            <h2>Time Left: </h2>
+                        </div>
+                        <div class="sharedCol">
+                            <span class="dark" id="insertTime">120 sec</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -50,18 +52,18 @@
             </div>
             <div class="row">
                 <form class="invis" id="choices">
-                    <input type="radio" id="choice1" name="question" value="choice-A">
-                    <label for="choice-A">Test</label><br>
-                    <input type="radio" id="choice2" name="question" value="choice-B">
-                    <label for="choice-B">Test</label><br>
-                    <input type="radio" id="choice3" name="question" value="choice-C">
-                    <label for="choice-C">Test</label><br>
-                    <input type="radio" id="choice4" name="question" value="choice-D">
-                    <label for="choice-D">Test</label><br>
+                    <input type="radio" id="choice1" name="question" value="A">
+                    <label id="choice1Field" for="A">Test</label><br>
+                    <input type="radio" id="choice2" name="question" value="B">
+                    <label id="choice2Field" for="B">Test</label><br>
+                    <input type="radio" id="choice3" name="question" value="C">
+                    <label id="choice3Field" for="C">Test</label><br>
+                    <input type="radio" id="choice4" name="question" value="D">
+                    <label id="choice4Field" for="D">Test</label><br>
                     <div class="textCenter">
                         <p>You chose: </p>
                         <p id="chosen"></p>
-                        <input type="submit" id="subButton" value="Submit">
+                        <input type="submit" id="subButton" value="LockIn">
                         <button id="nextButton">Next Question</button>
                     </div>
                 </form>

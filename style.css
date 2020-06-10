@@ -1,5 +1,5 @@
 .row{
-    display: block;
+    vertical-align: top;
 }
 
 .col-Base{

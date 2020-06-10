@@ -1,20 +1,20 @@
+//Assigning selector values for buttons and fields to replace
 var startButton = document.querySelector("#startButton");
 var endPageButton = document.querySelector("#viewHS");
-var submitButton = document.querySelector("#subButton");
+var lockInButton = document.querySelector("#subButton");
 var nextButton = document.querySelector("#nextButton");
 var choices = document.querySelector("#choices");
 var questionNum = document.querySelector("#questionNum");
 var questionField = document.querySelector("#questionField");
-//Choice
+//Choices and Choice Texts
 var choice1 = document.querySelector("#choice1");
 var choice2 = document.querySelector("#choice2");
 var choice3 = document.querySelector("#choice3");
 var choice4 = document.querySelector("#choice4");
-//Stores our questions, question options, and user answers
-var questions=["Test Question 1","Test Question 2","Test Question 3","Test Question 4","Test Question 5","Test Question 6","Test Question 7","Test Question 8","Test Question 9","Test Question 10"];
-var questionCount = ["Question 1","Question 2","Question 3","Question 4","Question 5","Question 6","Question 7","Question 8","Question 9","Question 10"];
-var userChoice = ["","","","","","","","","",""];
-var answers = ["choice-A","choice-A","choice-A","choice-A","choice-A","choice-A","choice-A","choice-A","choice-A","choice-A"];
+var choice1Field = document.querySelector("#choice1Field");
+var choice2Field = document.querySelector("#choice2Field");
+var choice3Field = document.querySelector("#choice3Field");
+var choice4Field = document.querySelector("#choice4Field");
 //Keeps track of what question we're on
 var currentIndex= 1;
 //Time in seconds of quiz length
@@ -23,7 +23,109 @@ var time = 120;
 var numRight=0;
 //Get's set to true when last question of quiz completed
 var quizFinished = false;
-
+//Stores our questions, question options, and user answers
+var quizInfo = [
+    {
+        questionNum: "Question 1",
+        question:"Which is not a true statement about variables in JavaScript Programs?",
+        optionA: "A. Are used for storing numbers, dates, or other values",
+        optionB: "B. Used for problem-solving",
+        optionC: "C. Variables can store up to 2 values",
+        optionD: "D. All are true",
+        answer: "C",
+        userAnswer: ""
+    },
+    {
+        questionNum: "Question 2",
+        question: "What should appear at the very end of your JavaScript in HTML?",
+        optionA: "A. </script>",
+        optionB: "B. <script>",
+        optionC: "C. The END statement",
+        optionD: "D. JavaScript has no closing tag",
+        answer: "A",
+        userAnswer: ""
+    },
+    {
+        questionNum: "Question 3",
+        question: "Which of the following is not a valid JavaScript variable name?",
+        optionA: "VARIABLE",
+        optionB: "_first_and_last_names",
+        optionC: "FirstAndLast",
+        optionD: "2names",
+        answer: "D",
+        userAnswer: ""
+    },
+    {
+        questionNum: "Question 4",
+        question: "What is the correct syntax for referring to an external script called \" abc.js\"?",
+        optionA: "A. <script href=\"abc.js\">",
+        optionB: "B. <script name=\" abc.js\">",
+        optionC: "C. <script src=\" abc.js\">",
+        optionD: "D. None of the above",
+        answer: "C",
+        userAnswer: ""
+    },
+    {
+        questionNum: "Question 5",
+        question: "Which of the following is not considered a JavaScript operator?",
+        optionA: "A. typeof",
+        optionB: "B. new",
+        optionC: "C. delete",
+        optionD: "D. this",
+        answer: "D",
+        userAnswer: ""
+    },
+    {
+        questionNum: "Question 6",
+        question: "Using _______ statement is how you test for a specific condition",
+        optionA: "A. Select",
+        optionB: "B. If",
+        optionC: "C. Switch",
+        optionD: "D. For",
+        answer: "B",
+        userAnswer: ""
+    },
+    {
+        questionNum: "Question 7",
+        question: "How do you write \"Hello World\" in an alert box?",
+        optionA: "A. alertBox(\"Hello World\");",
+        optionB: "B. msg(\"Hello World\")';",
+        optionC: "C. alert(\"Hello World\");",
+        optionD: "D. msgBox(\"Hello World\");",
+        answer: "C",
+        userAnswer: ""
+    },
+    {
+        questionNum: "Question 8",
+        question: "How to insert a comment that has more than one line?",
+        optionA: "A. // This comment has \nmore than one line//",
+        optionB: "B. /*This comment has \nmore than one line*/",
+        optionC: "C. <!--This comment has \nmore than one line -->",
+        optionD: "D. ////This comment has \nmore than one line",
+        answer: "B",
+        userAnswer: ""
+    },
+    {
+        questionNum: "Question 9",
+        question: "How do you find the number with the highest value of x and y?",
+        optionA: "A. ceil(x,y);",
+        optionB: "B. Math.ceil(x,y)",
+        optionC: "C. top(x,y)",
+        optionD: "D. Math.max(x,y)",
+        answer: "D",
+        userAnswer: ""
+    },
+    {
+        questionNum: "Question 10",
+        question: "Which event occurs when the user clicks on an HTML element?",
+        optionA: "A. onclick",
+        optionB: "B. onchange",
+        optionC: "C. onmouseclick",
+        optionD: "D. onmouseover",
+        answer: "A",
+        userAnswer: ""
+    },
+]
 startButton.addEventListener("click", function(){
     setInterval(function(){
         if(time >= 0 && !quizFinished){
@@ -31,7 +133,7 @@ startButton.addEventListener("click", function(){
         time--;
         }
         else{
-            //
+            //When time runs out or user finishes quiz, the page gets reformatted and a button to HS page appears
             questionNum.textContent = "The quiz has been completed. Let's see how you did!";
             questionField.style.textAlign = "center";
             questionField.textContent = "You got " + numRight + "/10 questions right.\nThat's a score of "+((numRight/10)*100)+"%. It only took you "+ (119-time) + " seconds!";
@@ -43,34 +145,47 @@ startButton.addEventListener("click", function(){
     startButton.style.visibility = "hidden";
     choices.style.visibility = "visible";
 
-    //Initializes Question texts
-    questionNum.textContent = questionCount[0];
-    questionField.textContent = questions[0];
+    //Initializes question information when start button clicked 
+    questionNum.textContent = quizInfo[0].questionNum;
+    questionField.textContent = quizInfo[0].question;
+    choice1Field.textContent = quizInfo[0].optionA;
+    choice2Field.textContent = quizInfo[0].optionB;
+    choice3Field.textContent = quizInfo[0].optionC;
+    choice4Field.textContent = quizInfo[0].optionD;
 });
 
-submitButton.addEventListener("click", function(){
+lockInButton.addEventListener("click", function(){
     event.preventDefault();
-    //On clicking submit we store the choice of user
-    userChoice = checkRadio();
-    document.querySelector("#chosen").textContent = userChoice;
+    //On clicking lockIn we store the choice of user
+     quizInfo[currentIndex - 1].userAnswer = checkRadio();
+    document.querySelector("#chosen").textContent = quizInfo[currentIndex - 1].userAnswer;
 });
 
 //When user clicks nextButton the next question data will populate
 nextButton.addEventListener("click",function (){
     event.preventDefault();
-    //Checks if previous answer was answered correctly
-    if(userChoice == answers[currentIndex-1])
+    //Checks if previous answer was answered correctly and counts how many user has right
+    if(quizInfo[currentIndex-1].userAnswer === quizInfo[currentIndex-1].answer)
         numRight++;
     else
+        //time goes down if user gets question wrong
         time -= 10;
+    console.log(numRight);
+    //Unchecks previously checked radio input
     uncheckRadio();
     //Refeshes answer chosen
     document.querySelector("#chosen").textContent = "";
     //Grabs the next question fields
-    questionNum.textContent = questionCount[currentIndex];
-    questionField.textContent = questions[currentIndex];
-    if(currentIndex < questions.length)
+    //When currentIndex becomes equal to the length of questions, we no longer try to access our quizInfo and quiz is finished
+    if(currentIndex <= quizInfo.length - 1){
+    questionNum.textContent = quizInfo[currentIndex].questionNum;
+    questionField.textContent = quizInfo[currentIndex].question;
+    choice1Field.textContent = quizInfo[currentIndex].optionA;
+    choice2Field.textContent = quizInfo[currentIndex].optionB;
+    choice3Field.textContent = quizInfo[currentIndex].optionC;
+    choice4Field.textContent = quizInfo[currentIndex].optionD;
     currentIndex++;
+    }
     else{
         quizFinished = true;
     }
@@ -101,6 +216,3 @@ function uncheckRadio(){
     if(choice4.checked)
         choice4.checked = false;
 }
-
-//To do:
-//- Only allow 10 answers (for now user can click all 4 options and get the answer right, as well as output can be >100%)
