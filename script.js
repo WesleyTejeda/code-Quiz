@@ -160,6 +160,9 @@ lockInButton.addEventListener("click", function(){
     event.preventDefault();
     //On clicking lockIn we store the choice of user
      quizInfo[currentIndex - 1].userAnswer = checkRadio();
+     //Shows chosenText on click for user to see
+     document.querySelector("#chosenText").style.visibility = "visible";
+     //Shows what choice user selected
     document.querySelector("#chosen").textContent = quizInfo[currentIndex - 1].userAnswer;
 });
 
@@ -175,8 +178,9 @@ nextButton.addEventListener("click",function (){
     console.log(numRight);
     //Unchecks previously checked radio input
     uncheckRadio();
-    //Refeshes answer chosen
+    //Refeshes answer chosen and hides chosen field
     document.querySelector("#chosen").textContent = "";
+    document.querySelector("#chosenText").style.visibility = "hidden";
     //Grabs the next question fields
     //When currentIndex becomes equal to the length of questions, we no longer try to access our quizInfo and quiz is finished
     //quizInfo length is subtracted because we already initialized question 1 when the quiz started
