@@ -26,7 +26,7 @@ var quizFinished = false;
 
 startButton.addEventListener("click", function(){
     setInterval(function(){
-        if(time > -1 && !quizFinished){
+        if(time >= 0 && !quizFinished){
         document.querySelector("#insertTime").textContent = time + " sec";
         time--;
         }
@@ -34,7 +34,7 @@ startButton.addEventListener("click", function(){
             //
             questionNum.textContent = "The quiz has been completed. Let's see how you did!";
             questionField.style.textAlign = "center";
-            questionField.textContent = "You got " + numRight + "/10 questions right.\nThat's a score of "+((numRight/10)*100)+"%. It only took you "+ (120-time) + " seconds!";
+            questionField.textContent = "You got " + numRight + "/10 questions right.\nThat's a score of "+((numRight/10)*100)+"%. It only took you "+ (119-time) + " seconds!";
             choices.style.visibility = "hidden";
             endPageButton.style.display = "block";
             
@@ -52,7 +52,8 @@ submitButton.addEventListener("click", function(){
     event.preventDefault();
     //On clicking submit we store the choice of user
     userChoice = checkRadio();
-    if(userChoice == answers[currentIndex] && numRight >= currentIndex)
+    document.querySelector("#chosen").textContent = userChoice;
+    if(userChoice == answers[currentIndex-1])
     numRight++;
 });
 
@@ -60,6 +61,9 @@ submitButton.addEventListener("click", function(){
 nextButton.addEventListener("click",function (){
     event.preventDefault();
     uncheckRadio();
+    //Refeshes answer chosen
+    document.querySelector("#chosen").textContent = "";
+    //Grabs the next question fields
     questionNum.textContent = questionCount[currentIndex];
     questionField.textContent = questions[currentIndex];
     if(currentIndex < questions.length)
@@ -83,7 +87,7 @@ function checkRadio(){
         return false;
 }
 
-//Unchecks whichever radio selected on previous question
+//Unchecks whichever radio selected
 function uncheckRadio(){
     if(choice1.checked)
         choice1.checked = false;
