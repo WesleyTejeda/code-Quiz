@@ -23,9 +23,7 @@
     padding: 50px;
    
 }
-.center{
-    text-align: center;
-}
+
 .center-Button{
     text-align: center;
     width: 20%;
@@ -54,7 +52,7 @@
     visibility: hidden;
 }
 .display{
-    display: block;
+    display: none;
 }
 
 .float-Right{
@@ -77,7 +75,9 @@ body{
 }
 span{
     font-size: 30px;
-    margin: auto;
+    position: fixed;
+    right: 125px;
+    top: 20px;
 }
 
 p {
