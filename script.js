@@ -134,17 +134,19 @@ startButton.addEventListener("click", function(){
         time--;
         }
         else{
+            //Calculates how long user took to complete quiz, this is their score
+            var userTime = 120 - time;
             //When time runs out or user finishes quiz, the page gets reformatted and a button to HS page appears
             //Initial textbox appears as well
             questionNum.textContent = "The quiz has been completed. Let's see how you did!";
             questionField.style.textAlign = "center";
-            questionField.textContent = "You got " + numRight + "/10 questions right.\nThat's a score of "+((numRight/10)*100)+"%. It only took you "+ (119-time) + " seconds!";
+            questionField.textContent = "You got " + numRight + "/10 questions right.\nYou got a time score of "+userTime+"!";
             choices.style.visibility = "hidden";
             document.querySelector("#submitScore").style.display = "block";
             document.querySelector("#subHS").addEventListener("click", function(){
                 var userName = document.querySelector("#name").value;
                 localStorage.setItem("Name", userName);
-                localStorage.setItem("Score", time);
+                localStorage.setItem("Score", UserTime);
             });
 
         }
