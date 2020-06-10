@@ -1,6 +1,5 @@
 //Assigning selector values for buttons and fields to replace
 var startButton = document.querySelector("#startButton");
-var endPageButton = document.querySelector("#viewHS");
 var lockInButton = document.querySelector("#subButton");
 var nextButton = document.querySelector("#nextButton");
 var choices = document.querySelector("#choices");
@@ -136,11 +135,18 @@ startButton.addEventListener("click", function(){
         }
         else{
             //When time runs out or user finishes quiz, the page gets reformatted and a button to HS page appears
+            //Initial textbox appears as well
             questionNum.textContent = "The quiz has been completed. Let's see how you did!";
             questionField.style.textAlign = "center";
             questionField.textContent = "You got " + numRight + "/10 questions right.\nThat's a score of "+((numRight/10)*100)+"%. It only took you "+ (119-time) + " seconds!";
             choices.style.visibility = "hidden";
-            endPageButton.style.display = "block";
+            document.querySelector("#submitScore").style.display = "block";
+            document.querySelector("#subHS").addEventListener("click", function(){
+                var userName = document.querySelector("#name").value;
+                localStorage.setItem("Name", userName);
+                localStorage.setItem("Score", time);
+            });
+
         }
     }, 1000);
     startButton.style.visibility = "hidden";
