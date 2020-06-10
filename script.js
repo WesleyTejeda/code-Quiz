@@ -16,6 +16,7 @@ var choice2Field = document.querySelector("#choice2Field");
 var choice3Field = document.querySelector("#choice3Field");
 var choice4Field = document.querySelector("#choice4Field");
 //Keeps track of what question we're on
+//Starts at 1 because we're initializing our first question as soon as we start the quiz
 var currentIndex= 1;
 //Time in seconds of quiz length
 var time = 120;
@@ -128,6 +129,7 @@ var quizInfo = [
 ]
 startButton.addEventListener("click", function(){
     setInterval(function(){
+        //Time only ticks down if 
         if(time >= 0 && !quizFinished){
         document.querySelector("#insertTime").textContent = time + " sec";
         time--;
@@ -177,6 +179,7 @@ nextButton.addEventListener("click",function (){
     document.querySelector("#chosen").textContent = "";
     //Grabs the next question fields
     //When currentIndex becomes equal to the length of questions, we no longer try to access our quizInfo and quiz is finished
+    //quizInfo length is subtracted because we already initialized question 1 when the quiz started
     if(currentIndex <= quizInfo.length - 1){
     questionNum.textContent = quizInfo[currentIndex].questionNum;
     questionField.textContent = quizInfo[currentIndex].question;
