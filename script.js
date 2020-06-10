@@ -141,7 +141,6 @@ startButton.addEventListener("click", function(){
             questionField.textContent = "You got " + numRight + "/10 questions right.\nThat's a score of "+((numRight/10)*100)+"%. It only took you "+ (119-time) + " seconds!";
             choices.style.visibility = "hidden";
             endPageButton.style.display = "block";
-            
         }
     }, 1000);
     startButton.style.visibility = "hidden";
