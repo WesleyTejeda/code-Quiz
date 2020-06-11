@@ -222,7 +222,7 @@ if(eleExists(nextButton)){
 //Checks to see if hsList exists on page
 if(eleExists(hsList))
 {
-    var keyValArray=[{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"}];
+    var keyValArray=[{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""}];
     var toSortArray=[];
     //Loops through localstorage and sorts values into create an array
     for(var i = 0; i < localStorage.length;i++){
@@ -236,7 +236,7 @@ if(eleExists(hsList))
     //Sorts by swapping indices when score[x] < score[later index], we want the highest score at index 0
         for(var x=0; x < toSortArray.length; x++){
             for(var i=x+1; i < toSortArray.length;i++){
-                if(keyValArray[x].Score < keyValArray[i].Score && keyValArray[i].Score !== "null" && keyValArray[x].Score !== "null"){
+                if(keyValArray[x].Score < keyValArray[i].Score){
                     var temp1 = toSortArray[x];
                     var temp2 = toSortArray[i];
                     toSortArray[x] = temp2;
