@@ -222,30 +222,33 @@ if(eleExists(nextButton)){
 //Checks to see if hsList exists on page
 if(eleExists(hsList))
 {
-    var highestInArray = "";
     var keyValArray=[{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"}];
-    var sortedArray=[];
+    var toSortArray=[];
     //Loops through localstorage and sorts values into create an array
     for(var i = 0; i < localStorage.length;i++){
+        //Assigns object properties for name and score
         keyValArray[i].Name = localStorage.key(i);
-        keyValArray[i].Score = localStorage.getItem(localStorage.key(i)); 
-        sortedArray.push(keyValArray[i].Name+" "+keyValArray[i].Score);
+        keyValArray[i].Score = localStorage.getItem(localStorage.key(i));
+        //Copies the values from object array in an array to be sorted
+        toSortArray.push(keyValArray[i].Name+" "+keyValArray[i].Score);
     }
     console.log(keyValArray);
-    //Sorts based on highest score
-        // for(var x=0; x < keyValArray.length; x++){
-        //     for(var i=x+1; i < keyValArray.length;i++){
-        //         if(keyValArray[x].Score < keyValArray[i].Score && keyValArray[i].Score !== "null" && keyValArray[x].Score !== "null"){
-        //             var temp1 = 
-        //             var temp2 =                    
-        //         }
-        //     }
-        // }
-    console.log(sortedArray);
+    //Sorts by swapping indices when score[x] < score[later index], we want the highest score at index 0
+        for(var x=0; x < toSortArray.length; x++){
+            for(var i=x+1; i < toSortArray.length;i++){
+                if(keyValArray[x].Score < keyValArray[i].Score && keyValArray[i].Score !== "null" && keyValArray[x].Score !== "null"){
+                    var temp1 = toSortArray[x];
+                    var temp2 = toSortArray[i];
+                    toSortArray[x] = temp2;
+                    toSortArray[i] = temp1;                
+                }
+            }
+        }
+    console.log(toSortArray);
     //Appends each element to display top 10 entries
     for(var i=0; i < keyValArray.length ;i++){
         var newLi = document.createElement("li");
-        newLi.textContent = sortedArray[i];
+        newLi.textContent = toSortArray[i];
         hsList.appendChild(newLi);
     }
 }
