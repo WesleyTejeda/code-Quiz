@@ -14,6 +14,8 @@ var choice1Field = document.querySelector("#choice1Field");
 var choice2Field = document.querySelector("#choice2Field");
 var choice3Field = document.querySelector("#choice3Field");
 var choice4Field = document.querySelector("#choice4Field");
+//Points to our ordered list in highscores html
+var hsList = document.querySelector("#hsList");
 //Keeps track of what question we're on
 //Starts at 1 because we're initializing our first question as soon as we start the quiz
 var currentIndex= 1;
@@ -216,6 +218,36 @@ if(eleExists(nextButton)){
             quizFinished = true;
         }
     });
+}
+//Checks to see if hsList exists on page
+if(eleExists(hsList))
+{
+    var highestInArray = "";
+    var keyValArray=[{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"},{Name:"null",Score:"null"}];
+    var sortedArray=[];
+    //Loops through localstorage and sorts values into create an array
+    for(var i = 0; i < localStorage.length;i++){
+        keyValArray[i].Name = localStorage.key(i);
+        keyValArray[i].Score = localStorage.getItem(localStorage.key(i)); 
+        sortedArray.push(keyValArray[i].Name+" "+keyValArray[i].Score);
+    }
+    console.log(keyValArray);
+    //Sorts based on highest score
+        // for(var x=0; x < keyValArray.length; x++){
+        //     for(var i=x+1; i < keyValArray.length;i++){
+        //         if(keyValArray[x].Score < keyValArray[i].Score && keyValArray[i].Score !== "null" && keyValArray[x].Score !== "null"){
+        //             var temp1 = 
+        //             var temp2 =                    
+        //         }
+        //     }
+        // }
+    console.log(sortedArray);
+    //Appends each element to display top 10 entries
+    for(var i=0; i < keyValArray.length ;i++){
+        var newLi = document.createElement("li");
+        newLi.textContent = sortedArray[i];
+        hsList.appendChild(newLi);
+    }
 }
 
 //Checks to see which radio was chosen
