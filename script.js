@@ -127,8 +127,7 @@ var quizInfo = [
     },
 ]
 //We check to see if element exists on page
-var elementExists = startButton;
-if(eleExists(elementExists,"#startButton")){
+if(eleExists(startButton)){
     startButton.addEventListener("click", function(){
         var timer = setInterval(function(){
             //Time only ticks down if 
@@ -147,17 +146,16 @@ if(eleExists(elementExists,"#startButton")){
                 questionField.textContent = "You got " + numRight + "/10 questions right.\nYou got a time score of "+time+"!";
                 choices.style.visibility = "hidden";
                 document.querySelector("#submitScore").style.display = "block";
+                document.querySelector("#hsButton").style.display = "block";
                 //When submit button appears user can click submit to save score
                 //When user clicks they'll save their score and page redirects to highscores page
                 document.querySelector("#subHS").addEventListener("click", function(){
                     event.preventDefault();
-                    document.querySelector("#submitScore").action = "highscores.html";
                     var storedAlready= false;
                     if(!storedAlready){
                         var userName = document.querySelector("#name").value;
                         localStorage.setItem(userName, time);
                     }
-                    window.location.replace("https://wesleytejeda.github.io/code-Quiz/")
                 });
             }
         }, 1000);
@@ -174,8 +172,7 @@ if(eleExists(elementExists,"#startButton")){
     });
 }
 //We check to see if element exists on page
-elementExists = lockInButton;
-if(eleExists(elementExists,"#subButton")){
+if(eleExists(lockInButton)){
     lockInButton.addEventListener("click", function(){
         event.preventDefault();
         //On clicking lockIn we store the choice of user
@@ -187,8 +184,7 @@ if(eleExists(elementExists,"#subButton")){
     });
 }
 //We check to see if element exists on page
-elementExists = lockInButton;
-if(eleExists(elementExists,"#nextButton")){
+if(eleExists(nextButton)){
     //When user clicks nextButton the next question data will populate
     nextButton.addEventListener("click",function (){
         event.preventDefault();
@@ -248,9 +244,8 @@ function uncheckRadio(){
         choice4.checked = false;
 }
 //Checks to see if the element exists on the current page
-function eleExists(elementExists,arg1){
-    elementExists = document.querySelector(arg1);
-    if(elementExists !== null)
+function eleExists(arg1){
+    if(arg1 !== null)
         return true;
     else
         return false;
