@@ -126,84 +126,101 @@ var quizInfo = [
         userAnswer: ""
     },
 ]
-startButton.addEventListener("click", function(){
-    setInterval(function(){
-        //Time only ticks down if 
-        if(time >= 0 && !quizFinished){
-        document.querySelector("#insertTime").textContent = time + " sec";
-        time--;
+//We check to see if element exists on page
+var elementExists = startButton;
+if(eleExists(elementExists,"#startButton")){
+    startButton.addEventListener("click", function(){
+        var timer = setInterval(function(){
+            //Time only ticks down if 
+            if(time >= 0 && !quizFinished){
+            document.querySelector("#insertTime").textContent = time + " sec";
+            time--;
+            } 
+            else {
+                //Stops Timer
+                clearInterval(timer);
+                console.log("Done");
+                //When time runs out or user finishes quiz, the page gets reformatted and a button to HS page appears
+                //Initial textbox appears as well
+                questionNum.textContent = "The quiz has been completed. Let's see how you did!";
+                questionField.style.textAlign = "center";
+                questionField.textContent = "You got " + numRight + "/10 questions right.\nYou got a time score of "+time+"!";
+                choices.style.visibility = "hidden";
+                document.querySelector("#submitScore").style.display = "block";
+                //When submit button appears user can click submit to save score
+                //When user clicks they'll save their score and page redirects to highscores page
+                document.querySelector("#subHS").addEventListener("click", function(){
+                    event.preventDefault();
+                    document.querySelector("#submitScore").action = "highscores.html";
+                    var storedAlready= false;
+                    if(!storedAlready){
+                        var userName = document.querySelector("#name").value;
+                        localStorage.setItem(userName, time);
+                    }
+                    window.location.replace("https://wesleytejeda.github.io/code-Quiz/")
+                });
+            }
+        }, 1000);
+        startButton.style.visibility = "hidden";
+        choices.style.visibility = "visible";
+
+        //Initializes question information when start button clicked 
+        questionNum.textContent = quizInfo[0].questionNum;
+        questionField.textContent = quizInfo[0].question;
+        choice1Field.textContent = quizInfo[0].optionA;
+        choice2Field.textContent = quizInfo[0].optionB;
+        choice3Field.textContent = quizInfo[0].optionC;
+        choice4Field.textContent = quizInfo[0].optionD;
+    });
+}
+//We check to see if element exists on page
+elementExists = lockInButton;
+if(eleExists(elementExists,"#subButton")){
+    lockInButton.addEventListener("click", function(){
+        event.preventDefault();
+        //On clicking lockIn we store the choice of user
+        quizInfo[currentIndex - 1].userAnswer = checkRadio();
+        //Shows chosenText on click for user to see
+        document.querySelector("#chosenText").style.visibility = "visible";
+        //Shows what choice user selected
+        document.querySelector("#chosen").textContent = quizInfo[currentIndex - 1].userAnswer;
+    });
+}
+//We check to see if element exists on page
+elementExists = lockInButton;
+if(eleExists(elementExists,"#nextButton")){
+    //When user clicks nextButton the next question data will populate
+    nextButton.addEventListener("click",function (){
+        event.preventDefault();
+        //Checks if previous answer was answered correctly and counts how many user has right
+        if(quizInfo[currentIndex-1].userAnswer === quizInfo[currentIndex-1].answer)
+            numRight++;
+        else
+            //time goes down if user gets question wrong
+            time -= 10;
+        console.log(numRight);
+        //Unchecks previously checked radio input
+        uncheckRadio();
+        //Refeshes answer chosen and hides chosen field
+        document.querySelector("#chosen").textContent = "";
+        document.querySelector("#chosenText").style.visibility = "hidden";
+        //Grabs the next question fields
+        //When currentIndex becomes equal to the length of questions, we no longer try to access our quizInfo and quiz is finished
+        //quizInfo length is subtracted because we already initialized question 1 when the quiz started
+        if(currentIndex <= quizInfo.length - 1){
+        questionNum.textContent = quizInfo[currentIndex].questionNum;
+        questionField.textContent = quizInfo[currentIndex].question;
+        choice1Field.textContent = quizInfo[currentIndex].optionA;
+        choice2Field.textContent = quizInfo[currentIndex].optionB;
+        choice3Field.textContent = quizInfo[currentIndex].optionC;
+        choice4Field.textContent = quizInfo[currentIndex].optionD;
+        currentIndex++;
         }
         else{
-            //Calculates how long user took to complete quiz, this is their score
-            var userTime = 120 - time;
-            //When time runs out or user finishes quiz, the page gets reformatted and a button to HS page appears
-            //Initial textbox appears as well
-            questionNum.textContent = "The quiz has been completed. Let's see how you did!";
-            questionField.style.textAlign = "center";
-            questionField.textContent = "You got " + numRight + "/10 questions right.\nYou got a time score of "+userTime+"!";
-            choices.style.visibility = "hidden";
-            document.querySelector("#submitScore").style.display = "block";
-            document.querySelector("#subHS").addEventListener("click", function(){
-                var userName = document.querySelector("#name").value;
-                localStorage.setItem("Name", userName);
-                localStorage.setItem("Score", UserTime);
-            });
-
+            quizFinished = true;
         }
-    }, 1000);
-    startButton.style.visibility = "hidden";
-    choices.style.visibility = "visible";
-
-    //Initializes question information when start button clicked 
-    questionNum.textContent = quizInfo[0].questionNum;
-    questionField.textContent = quizInfo[0].question;
-    choice1Field.textContent = quizInfo[0].optionA;
-    choice2Field.textContent = quizInfo[0].optionB;
-    choice3Field.textContent = quizInfo[0].optionC;
-    choice4Field.textContent = quizInfo[0].optionD;
-});
-
-lockInButton.addEventListener("click", function(){
-    event.preventDefault();
-    //On clicking lockIn we store the choice of user
-     quizInfo[currentIndex - 1].userAnswer = checkRadio();
-     //Shows chosenText on click for user to see
-     document.querySelector("#chosenText").style.visibility = "visible";
-     //Shows what choice user selected
-    document.querySelector("#chosen").textContent = quizInfo[currentIndex - 1].userAnswer;
-});
-
-//When user clicks nextButton the next question data will populate
-nextButton.addEventListener("click",function (){
-    event.preventDefault();
-    //Checks if previous answer was answered correctly and counts how many user has right
-    if(quizInfo[currentIndex-1].userAnswer === quizInfo[currentIndex-1].answer)
-        numRight++;
-    else
-        //time goes down if user gets question wrong
-        time -= 10;
-    console.log(numRight);
-    //Unchecks previously checked radio input
-    uncheckRadio();
-    //Refeshes answer chosen and hides chosen field
-    document.querySelector("#chosen").textContent = "";
-    document.querySelector("#chosenText").style.visibility = "hidden";
-    //Grabs the next question fields
-    //When currentIndex becomes equal to the length of questions, we no longer try to access our quizInfo and quiz is finished
-    //quizInfo length is subtracted because we already initialized question 1 when the quiz started
-    if(currentIndex <= quizInfo.length - 1){
-    questionNum.textContent = quizInfo[currentIndex].questionNum;
-    questionField.textContent = quizInfo[currentIndex].question;
-    choice1Field.textContent = quizInfo[currentIndex].optionA;
-    choice2Field.textContent = quizInfo[currentIndex].optionB;
-    choice3Field.textContent = quizInfo[currentIndex].optionC;
-    choice4Field.textContent = quizInfo[currentIndex].optionD;
-    currentIndex++;
-    }
-    else{
-        quizFinished = true;
-    }
-});
+    });
+}
 
 //Checks to see which radio was chosen
 function checkRadio(){
@@ -230,3 +247,11 @@ function uncheckRadio(){
     if(choice4.checked)
         choice4.checked = false;
 }
+//Checks to see if the element exists on the current page
+function eleExists(elementExists,arg1){
+    elementExists = document.querySelector(arg1);
+    if(elementExists !== null)
+        return true;
+    else
+        return false;
+};
