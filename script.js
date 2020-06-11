@@ -133,7 +133,7 @@ if(eleExists(startButton)){
     startButton.addEventListener("click", function(){
         var timer = setInterval(function(){
             //Time only ticks down if 
-            if(time >= 0 && !quizFinished){
+            if(time > 0 && !quizFinished){
             document.querySelector("#insertTime").textContent = time + " sec";
             time--;
             } 
@@ -195,7 +195,10 @@ if(eleExists(nextButton)){
             numRight++;
         else
             //time goes down if user gets question wrong
-            time -= 10;
+            if(time >= 10)
+                time -= 10;
+            else
+                time = 0;
         console.log(numRight);
         //Unchecks previously checked radio input
         uncheckRadio();
@@ -228,27 +231,31 @@ if(eleExists(hsList))
     for(var i = 0; i < localStorage.length;i++){
         //Assigns object properties for name and score
         keyValArray[i].Name = localStorage.key(i);
-        keyValArray[i].Score = localStorage.getItem(localStorage.key(i));
-        //Copies the values from object array in an array to be sorted
-        toSortArray.push(keyValArray[i].Name+" "+keyValArray[i].Score);
+        keyValArray[i].Score = (localStorage.getItem(localStorage.key(i)));
     }
     console.log(keyValArray);
     //Sorts by swapping indices when score[x] < score[later index], we want the highest score at index 0
-        for(var x=0; x < toSortArray.length; x++){
-            for(var i=x+1; i < toSortArray.length;i++){
-                if(keyValArray[x].Score < keyValArray[i].Score){
-                    var temp1 = toSortArray[x];
-                    var temp2 = toSortArray[i];
-                    toSortArray[x] = temp2;
-                    toSortArray[i] = temp1;                
-                }
+    //We also want our paid
+    for(var x=0; x < keyValArray.length; x++){
+        for(var i=x+1; i < keyValArray.length;i++){
+            if(parseInt(keyValArray[x].Score) < parseInt(keyValArray[i].Score)){
+                var temp1 = keyValArray[x].Score;
+                var temp2 = keyValArray[i].Score;
+                var temp3 = keyValArray[x].Name;
+                var temp4 = keyValArray[i].Name;
+
+                keyValArray[x].Score = temp2;
+                keyValArray[i].Score = temp1;
+                keyValArray[x].Name = temp4;
+                keyValArray[i].Name = temp3;
             }
         }
-    console.log(toSortArray);
+    }
+    console.log(keyValArray);
     //Appends each element to display top 10 entries
     for(var i=0; i < keyValArray.length ;i++){
         var newLi = document.createElement("li");
-        newLi.textContent = toSortArray[i];
+        newLi.textContent = keyValArray[i].Name+" "+keyValArray[i].Score;
         hsList.appendChild(newLi);
     }
 }
