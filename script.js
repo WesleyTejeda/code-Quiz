@@ -226,7 +226,6 @@ if(eleExists(nextButton)){
 if(eleExists(hsList))
 {
     var keyValArray=[{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""}];
-    var toSortArray=[];
     //Loops through localstorage and sorts values into create an array
     for(var i = 0; i < localStorage.length;i++){
         //Assigns object properties for name and score
