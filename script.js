@@ -25,6 +25,11 @@ var time = 120;
 var numRight=0;
 //Get's set to true when last question of quiz completed
 var quizFinished = false;
+//Gives us current time
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+var hMs = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()+")";
+var dateTime = date+'('+hMs;
 //Stores our questions, question options, and user answers
 var quizInfo = [
     {
@@ -134,7 +139,7 @@ if(eleExists(startButton)){
         var timer = setInterval(function(){
             //Time only ticks down if 
             if(time > 0 && !quizFinished){
-            document.querySelector("#insertTime").textContent = time + " sec";
+            document.querySelector("#insertTime").textContent = time;
             time--;
             } 
             else {
@@ -153,12 +158,10 @@ if(eleExists(startButton)){
                 //When user clicks they'll save their score and page redirects to highscores page
                 document.querySelector("#subHS").addEventListener("click", function(){
                     event.preventDefault();
-                    var storedAlready= false;
-                    if(!storedAlready){
-                        var userName = document.querySelector("#name").value;
-                        localStorage.setItem(userName, time);
-                    }
-                });
+                    var userName = document.querySelector("#name").value;
+                    var temp = userName+" "+dateTime;
+                    localStorage.setItem(temp, time);
+                    });
             }
         }, 1000);
         startButton.style.visibility = "hidden";
@@ -193,13 +196,13 @@ if(eleExists(nextButton)){
         //Checks if previous answer was answered correctly and counts how many user has right
         if(quizInfo[currentIndex-1].userAnswer === quizInfo[currentIndex-1].answer)
             numRight++;
-        else
-            //time goes down if user gets question wrong
+        else{
+            //time goes down if user gets question wrong, adjusted for no negative times
             if(time >= 10)
                 time -= 10;
             else
                 time = 0;
-        console.log(numRight);
+        }
         //Unchecks previously checked radio input
         uncheckRadio();
         //Refeshes answer chosen and hides chosen field
@@ -218,6 +221,7 @@ if(eleExists(nextButton)){
         currentIndex++;
         }
         else{
+            //If there are no further questions the quiz is finished
             quizFinished = true;
         }
     });
@@ -225,14 +229,24 @@ if(eleExists(nextButton)){
 //Checks to see if hsList exists on page
 if(eleExists(hsList))
 {
-    var keyValArray=[{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""},{Name:"",Score:""}];
+    var arrayIndices = 0;
+    var keyValArray=[];
     //Loops through localstorage and sorts values into create an array
     for(var i = 0; i < localStorage.length;i++){
+        //Creates a new object in our array for the next key pair
+        keyValArray.push({Name:"",Score:"", Time:""});
         //Assigns object properties for name and score
-        keyValArray[i].Name = localStorage.key(i);
-        keyValArray[i].Score = (localStorage.getItem(localStorage.key(i)));
-    }
-    console.log(keyValArray);
+        keyValArray[i].Score = localStorage.getItem(localStorage.key(i));
+        var nameAndTime = (localStorage.key(i));
+        var temp = nameAndTime.split(" ");
+        console.log(temp);
+        keyValArray[i].Name = temp[0];
+        keyValArray[i].Time = temp[1];
+        //Keeps track of new index created
+        arrayIndices++;
+        }
+    
+    // console.log(keyValArray);
     //Sorts by swapping indices when score[x] < score[later index], we want the highest score at index 0
     //We also want our paid
     for(var x=0; x < keyValArray.length; x++){
@@ -242,20 +256,25 @@ if(eleExists(hsList))
                 var temp2 = keyValArray[i].Score;
                 var temp3 = keyValArray[x].Name;
                 var temp4 = keyValArray[i].Name;
+                var temp5 = keyValArray[x].Time;
+                var temp6 = keyValArray[i].Time;
 
                 keyValArray[x].Score = temp2;
                 keyValArray[i].Score = temp1;
                 keyValArray[x].Name = temp4;
                 keyValArray[i].Name = temp3;
+                keyValArray[x].Time = temp6;
+                keyValArray[i].Time = temp5;
             }
         }
     }
-    console.log(keyValArray);
-    //Appends each element to display top 10 entries
-    for(var i=0; i < keyValArray.length ;i++){
-        var newLi = document.createElement("li");
-        newLi.textContent = keyValArray[i].Name+" "+keyValArray[i].Score;
-        hsList.appendChild(newLi);
+    //Appends each element to display up to top 10 entries (Won't display 10 if there aren't 10 indicies)
+    if(localStorage.length !== 0){
+        for(var i=0; i < arrayIndices  && i < 10; i++){
+            var newLi = document.createElement("li");
+            newLi.textContent = keyValArray[i].Name+" | "+keyValArray[i].Score+" seconds left | Date: "+keyValArray[i].Time;
+            hsList.appendChild(newLi);
+        }
     }
 }
 
