@@ -9,7 +9,7 @@ In this repository I was tasked with creating a javascript quiz that users could
 
 ## Preview
 Quick demo down below of quiz, post-quiz page and highscores page
-![Demo of the quiz](assets/code-QuizDemo.gif)
+!["Demo of the quiz"](assets/code-QuizDemo.gif)
 
 ## My Approach in detail
 First I designed two pages of html, one for the quiz and one for the highscores page. The quiz html will present a landing page with a brief description of the quiz and a start button. When clicking the start button a timer will be set in motion, the first question populates, the start button will disappear, and finally the radio input form will appear. I used an array of objects to store the question information, choices, answers, and user answers.  These are the main buttons and how they work:
